@@ -27,20 +27,69 @@ public class SortingAlgorithms {
 
             arr[j + 1] = key;
         }
-
-        for (int i = 0; i < 100; i++) {
-            System.out.println(arr[i].getName() + ": " + arr[i].getIdNumber());
-        }
     }
 
     public void selectionSort(Record[] arr, int n) {
-        // TODO: Implement this sorting algorithm here.
+        for(int index = 0; index < n - 1; index++) {
+            int lowest = index;
+            for(int compare = index + 1; compare < n; compare++) {
+                if(arr[compare].getIdNumber() < arr[lowest].getIdNumber()) {
+                    lowest = compare;
+                }
+            }
+            Record temp = arr[lowest];
+            arr[lowest] = arr[index];
+            arr[index] = temp;
+        }
+    }
 
+    private void merge(Record[] arr, int p, int q, int r) {
+        int n1 = q - p + 1;
+        int n2 = r - q;
+
+        Record[] leftArr = new Record[n1];
+        Record[] rightArr = new Record[n2];
+
+        for (int i = 0; i < n1; i++) {
+            leftArr[i] = arr[p + i];
+        }
+        for (int j = 0; j < n2; j++) {
+            rightArr[j] = arr[q + j + 1];
+        }
+
+        int i = 0, j = 0, k = p;
+
+        while (i < n1 && j < n2) {
+            if (leftArr[i].getIdNumber() <= rightArr[j].getIdNumber()) {
+                arr[k] = leftArr[i];
+                i++;
+            } else {
+                arr[k] = rightArr[j];
+                j++;
+            }
+            k++;
+        }
+
+        while (i < n1) {
+            arr[k] = leftArr[i];
+            i++;
+            k++;
+        }
+
+        while (j < n2) {
+            arr[k] = rightArr[j];
+            j++;
+            k++;
+        }
     }
 
     public void mergeSort(Record[] arr, int p, int r) {
-        // TODO: Implement this sorting algorithm here.
-
+        if (p < r) {
+            int q = (p + r) / 2;
+            mergeSort(arr, p, q);
+            mergeSort(arr, q + 1, r);
+            merge(arr, p, q, r);
+        }
     }
 
     /*
@@ -51,8 +100,8 @@ public class SortingAlgorithms {
 
     private void heapify(Record[] arr, int n, int i) {
         int largestIndex = i;
-        int leftIndex = 2 * i + 1;
-        int rightIndex = 2 * i + 2;
+        int leftIndex = 2 * i + 1; // left node: 2 * i + 1
+        int rightIndex = 2 * i + 2; // right node: 2 * i + 2
 
         if (leftIndex < n && arr[leftIndex].getIdNumber() > arr[largestIndex].getIdNumber()) {
             largestIndex = leftIndex;
@@ -86,16 +135,7 @@ public class SortingAlgorithms {
             arr[0] = arr[i];
             arr[i] = temp;
 
-            // System.out.println("0: " + arr[0].getIdNumber() + " i " + i + ": " + arr[i].getIdNumber());
-
             heapify(arr, i, 0);
         }
     }
-
-    public void printArray(Record[] arr, int n) {
-        for (int i = 0; i < n; i++) {
-            System.out.println(arr[i].getName() + ": " + arr[i].getIdNumber());
-        }
-    }
-
 }
