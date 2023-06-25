@@ -43,52 +43,63 @@ public class SortingAlgorithms {
         }
     }
 
-    private void merge(Record[] arr, int p, int q, int r) {
-        int n1 = q - p + 1;
-        int n2 = r - q;
+    private void merge(Record[] array, int start, int mid, int end) {
+        // Calculates the lengths of the two subarrays
+        int length1 = mid - start + 1;
+        int length2 = end - mid;
 
-        Record[] leftArr = new Record[n1];
-        Record[] rightArr = new Record[n2];
+        // Creates temporary subarrays
+        Record[] leftSubarray = new Record[length1];
+        Record[] rightSubarray = new Record[length2];
 
-        for (int i = 0; i < n1; i++) {
-            leftArr[i] = arr[p + i];
+        // Copies elements from the original array to the temporary subarrays
+        for (int i = 0; i < length1; i++) {
+            leftSubarray[i] = array[start + i];
         }
-        for (int j = 0; j < n2; j++) {
-            rightArr[j] = arr[q + j + 1];
+        for (int j = 0; j < length2; j++) {
+            rightSubarray[j] = array[mid + j + 1];
         }
 
-        int i = 0, j = 0, k = p;
+        // Merges the two subarrays back into the original array
+        int i = 0, j = 0, k = start;
 
-        while (i < n1 && j < n2) {
-            if (leftArr[i].getIdNumber() <= rightArr[j].getIdNumber()) {
-                arr[k] = leftArr[i];
+        while (i < length1 && j < length2) {
+            if (leftSubarray[i].getIdNumber() <= rightSubarray[j].getIdNumber()) {
+                array[k] = leftSubarray[i];
                 i++;
             } else {
-                arr[k] = rightArr[j];
+                array[k] = rightSubarray[j];
                 j++;
             }
             k++;
         }
 
-        while (i < n1) {
-            arr[k] = leftArr[i];
+        // Copies any remaining elements from the left subarray
+        while (i < length1) {
+            array[k] = leftSubarray[i];
             i++;
             k++;
         }
 
-        while (j < n2) {
-            arr[k] = rightArr[j];
+        // Copies any remaining elements from the right subarray
+        while (j < length2) {
+            array[k] = rightSubarray[j];
             j++;
             k++;
         }
     }
 
-    public void mergeSort(Record[] arr, int p, int r) {
-        if (p < r) {
-            int q = (p + r) / 2;
-            mergeSort(arr, p, q);
-            mergeSort(arr, q + 1, r);
-            merge(arr, p, q, r);
+    public void mergeSort(Record[] array, int start, int end) {
+        if (start < end) {
+            // Finds the middle index
+            int mid = (start + end) / 2;
+
+            // Recursively sorts the two halves
+            mergeSort(array, start, mid);
+            mergeSort(array, mid + 1, end);
+
+            // Merges the sorted halves
+            merge(array, start, mid, end);
         }
     }
 
