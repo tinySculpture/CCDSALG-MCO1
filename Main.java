@@ -17,14 +17,14 @@ public class Main {
 
             // System.out.println("Heap Sort (Random " + num + "): ");
             // System.out.println("Heap Sort (Totally Reversed): ");
-            System.out.println("Heap Sort (Almost Sorted): ");
+            System.out.println("Selection Sort (Almost Sorted): ");
             
             long startTime = System.currentTimeMillis();
             
             // sa.insertionSort(records, num);
-            // sa.selectionSort(records, num);
+            sa.selectionSort(records, num);
             // sa.mergeSort(records, 0, num - 1);
-            sa.heapSort(records, num);
+            // sa.heapSort(records, num);
 
             long endTime = System.currentTimeMillis();
             long executionTime = endTime - startTime;
