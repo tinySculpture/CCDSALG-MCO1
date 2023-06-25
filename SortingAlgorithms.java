@@ -114,14 +114,17 @@ public class SortingAlgorithms {
         int leftIndex = 2 * i + 1; // left node: 2 * i + 1
         int rightIndex = 2 * i + 2; // right node: 2 * i + 2
 
+        // compare with left node
         if (leftIndex < n && arr[leftIndex].getIdNumber() > arr[largestIndex].getIdNumber()) {
             largestIndex = leftIndex;
         }
 
+        // compare if right node
         if (rightIndex < n && arr[rightIndex].getIdNumber() > arr[largestIndex].getIdNumber()) {
             largestIndex = rightIndex;
         }
 
+        // check if left or right node is largest
         if (largestIndex != i) {
             // swap
             Record temp = arr[i];
@@ -133,15 +136,18 @@ public class SortingAlgorithms {
     }
 
     public void heapSort(Record[] arr, int n) {
+        // turn array into a heap structure
         for (int i = n / 2 - 1; i >= 0; i--) {
             heapify(arr, n, i);
         }
 
-        /*
-         * Actual heap sort
-         */
+        // sort the heap
         for (int i = n - 1; i >= 0; i--) {
-            // swap
+            /*
+             * swap root node with last node,
+             * reheapify until last node - 1 (this is implied
+             * since n in heapify function is the number of items not index)
+             */
             Record temp = arr[0];
             arr[0] = arr[i];
             arr[i] = temp;
